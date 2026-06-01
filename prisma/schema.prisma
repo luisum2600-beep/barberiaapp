@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Barberia {
+  id               String     @id @default(cuid())
+  slug             String     @unique
+  nombre           String
+  descripcion      String?
+  logo             String?
+  fotos            String[]
+  direccion        String?
+  telefono         String?
+  horario          Json       @default("{}")
+  instagram        String?
+  whatsapp         String?
+  google_maps_url  String?
+  meta_description String?
+  culqi_public_key String?
+  culqi_secret_key String?
+  dominio_propio   String?
+  createdAt        DateTime   @default(now())
+
+  barberos   Barbero[]
+  servicios  Servicio[]
+  reservas   Reserva[]
+  usuarios   Usuario[]
+  resenas    Resena[]
+}
+
+model Barbero {
+  id                 String    @id @default(cuid())
+  barberia_id        String
+  nombre             String
+  foto               String?
+  especialidades     String[]
+  google_calendar_id String?
+  activo             Boolean   @default(true)
+
+  barberia  Barberia  @relation(fields: [barberia_id], references: [id], onDelete: Cascade)
+  reservas  Reserva[]
+}
+
+model Servicio {
+  id               String    @id @default(cuid())
+  barberia_id      String
+  nombre           String
+  descripcion      String?
+  precio           Decimal   @db.Decimal(10, 2)
+  duracion_minutos Int
+  foto             String?
+  activo           Boolean   @default(true)
+
+  barberia  Barberia  @relation(fields: [barberia_id], references: [id], onDelete: Cascade)
+  reservas  Reserva[]
+}
+
+model Reserva {
+  id               String        @id @default(cuid())
+  barberia_id      String
+  barbero_id       String
+  servicio_id      String
+  cliente_nombre   String
+  cliente_telefono String
+  cliente_email    String
+  fecha_hora       DateTime
+  estado           EstadoReserva @default(PENDIENTE)
+  pago_monto       Decimal?      @db.Decimal(10, 2)
+  pago_estado      EstadoPago?
+  culqi_charge_id  String?
+  google_event_id  String?
+  token_reagendar  String        @unique @default(cuid())
+  createdAt        DateTime      @default(now())
+
+  barberia       Barberia       @relation(fields: [barberia_id], references: [id], onDelete: Cascade)
+  barbero        Barbero        @relation(fields: [barbero_id], references: [id])
+  servicio       Servicio       @relation(fields: [servicio_id], references: [id])
+  notificaciones Notificacion[]
+}
+
+model Notificacion {
+  id          String             @id @default(cuid())
+  reserva_id  String
+  tipo        TipoNotificacion
+  canal       CanalNotificacion
+  estado      EstadoNotificacion @default(PENDIENTE)
+  fecha_envio DateTime?
+
+  reserva Reserva @relation(fields: [reserva_id], references: [id], onDelete: Cascade)
+}
+
+model ListaEspera {
+  id               String   @id @default(cuid())
+  barberia_id      String
+  servicio_id      String
+  fecha_deseada    DateTime
+  cliente_nombre   String
+  cliente_telefono String
+  cliente_email    String
+  notificado       Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+
+model Usuario {
+  id          String     @id @default(cuid())
+  barberia_id String
+  email       String     @unique
+  password    String
+  rol         RolUsuario @default(OWNER)
+
+  barberia Barberia @relation(fields: [barberia_id], references: [id], onDelete: Cascade)
+}
+
+model Resena {
+  id          String   @id @default(cuid())
+  barberia_id String
+  autor       String
+  texto       String
+  rating      Int
+  activo      Boolean  @default(true)
+
+  barberia Barberia @relation(fields: [barberia_id], references: [id], onDelete: Cascade)
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  CANCELADA
+  COMPLETADA
+}
+
+enum EstadoPago {
+  PENDIENTE
+  PAGADO
+  FALLIDO
+  REEMBOLSADO
+}
+
+enum TipoNotificacion {
+  CONFIRMACION
+  RECORDATORIO_24H
+  RECORDATORIO_1H
+  ENCUESTA_POST
+}
+
+enum CanalNotificacion {
+  WHATSAPP
+  EMAIL
+}
+
+enum EstadoNotificacion {
+  PENDIENTE
+  ENVIADA
+  FALLIDA
+}
+
+enum RolUsuario {
+  OWNER
+  STAFF
+}
