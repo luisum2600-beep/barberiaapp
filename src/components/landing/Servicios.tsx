@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface Servicio {
@@ -14,11 +15,11 @@ interface ServiciosProps {
   slug: string
 }
 
-const ACCENT_COLORS = [
-  'var(--clr-yellow)',
-  'var(--clr-red)',
-  'var(--clr-green)',
-  'var(--clr-yellow)',
+const SERVICIO_IMGS = [
+  'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80&auto=format&fit=crop',
 ]
 
 export default function Servicios({ servicios, slug }: ServiciosProps) {
@@ -31,18 +32,16 @@ export default function Servicios({ servicios, slug }: ServiciosProps) {
       style={{ borderTop: '1px solid var(--clr-border)' }}
     >
       <div className="max-w-screen-xl mx-auto">
-        {/* Section header */}
+
+        {/* Encabezado */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
           <div>
-            <p className="section-label mb-2" style={{ color: 'var(--clr-yellow)' }}>
+            <p className="section-label mb-2" style={{ color: 'var(--clr-amber)' }}>
               — Lo que hacemos
             </p>
             <h2
               className="font-display leading-none"
-              style={{
-                fontSize: 'clamp(3rem, 8vw, 7rem)',
-                color: 'var(--clr-white)',
-              }}
+              style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', color: 'var(--clr-cream)' }}
             >
               SERVICIOS
             </h2>
@@ -50,88 +49,89 @@ export default function Servicios({ servicios, slug }: ServiciosProps) {
           <Link
             href={`/${slug}/agendar`}
             className="section-label px-5 py-3 transition-all w-fit"
-            style={{
-              border: '1px solid var(--clr-yellow)',
-              color: 'var(--clr-yellow)',
-            }}
+            style={{ border: '1px solid var(--clr-amber)', color: 'var(--clr-amber)' }}
           >
-            Ver todo →
+            Agendar ahora →
           </Link>
         </div>
 
-        {/* Service cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px"
+        {/* Grilla de servicios */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px"
           style={{ background: 'var(--clr-border)' }}
         >
           {servicios.map((s, idx) => {
-            const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length]
+            const imgSrc = s.foto ?? SERVICIO_IMGS[idx % SERVICIO_IMGS.length]
             return (
               <article
                 key={s.id}
-                className="group relative flex flex-col justify-between p-7 transition-all duration-200"
-                style={{
-                  background: 'var(--clr-surface)',
-                  minHeight: '260px',
-                }}
+                className="group relative flex flex-col overflow-hidden"
+                style={{ background: 'var(--clr-surface)', minHeight: '380px' }}
               >
-                {/* Top: index + name */}
-                <div>
-                  <p
-                    className="font-display text-6xl leading-none mb-4 transition-colors duration-200"
-                    style={{ color: 'var(--clr-border)' }}
+                {/* Imagen superior */}
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={imgSrc}
+                    alt={s.nombre}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ filter: 'brightness(0.75)' }}
+                  />
+                  {/* Número de índice sobre la imagen */}
+                  <span
+                    className="absolute top-3 left-4 font-display"
+                    style={{
+                      fontSize: '3.5rem',
+                      lineHeight: 1,
+                      color: 'rgba(255,255,255,0.15)',
+                    }}
                     aria-hidden="true"
                   >
                     0{idx + 1}
-                  </p>
-                  <h3
-                    className="font-display text-2xl md:text-3xl leading-tight uppercase"
-                    style={{ color: 'var(--clr-white)' }}
-                  >
-                    {s.nombre}
-                  </h3>
-                  {s.descripcion && (
-                    <p
-                      className="text-xs leading-relaxed mt-2"
-                      style={{ color: 'var(--clr-gray-600)' }}
-                    >
-                      {s.descripcion}
-                    </p>
-                  )}
+                  </span>
                 </div>
 
-                {/* Bottom: price + CTA */}
-                <div className="flex items-end justify-between mt-6">
+                {/* Contenido */}
+                <div className="flex flex-col justify-between flex-1 p-6">
                   <div>
-                    <p
-                      className="font-display text-4xl leading-none"
-                      style={{ color: accent }}
+                    <h3
+                      className="font-display text-2xl leading-tight uppercase mb-2"
+                      style={{ color: 'var(--clr-cream)' }}
                     >
-                      S/{Number(s.precio).toFixed(0)}
-                    </p>
-                    <p className="section-label mt-1">
-                      {s.duracion_minutos} min
-                    </p>
+                      {s.nombre}
+                    </h3>
+                    {s.descripcion && (
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--clr-gray-500)' }}>
+                        {s.descripcion}
+                      </p>
+                    )}
                   </div>
-                  <Link
-                    href={`/${slug}/agendar?servicio=${s.id}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold transition-all"
-                    style={{
-                      border: `1px solid ${accent}`,
-                      color: accent,
-                    }}
-                    aria-label={`Agendar ${s.nombre}`}
-                  >
-                    Agendar
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                      <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    </svg>
-                  </Link>
+
+                  <div className="flex items-end justify-between mt-5">
+                    <div>
+                      <p className="font-display text-3xl leading-none" style={{ color: 'var(--clr-amber)' }}>
+                        S/{Number(s.precio).toFixed(0)}
+                      </p>
+                      <p className="section-label mt-1">{s.duracion_minutos} min</p>
+                    </div>
+                    <Link
+                      href={`/${slug}/agendar?servicio=${s.id}`}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold transition-all"
+                      style={{ border: '1px solid var(--clr-amber)', color: 'var(--clr-amber)' }}
+                      aria-label={`Agendar ${s.nombre}`}
+                    >
+                      Agendar
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
 
-                {/* Hover accent bar */}
+                {/* Barra de acento inferior en hover */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300"
-                  style={{ background: accent, transform: 'scaleX(0)', transformOrigin: 'left' }}
+                  className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+                  style={{ background: 'var(--clr-amber)' }}
                   aria-hidden="true"
                 />
               </article>

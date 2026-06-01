@@ -32,8 +32,30 @@ async function main() {
 
   await prisma.barbero.createMany({
     data: [
-      { barberia_id: barberia.id, nombre: 'Carlos Mendoza', especialidades: ['Fade', 'Clásico'] },
-      { barberia_id: barberia.id, nombre: 'Diego Ramos', especialidades: ['Barba', 'Diseño'] },
+      {
+        barberia_id: barberia.id,
+        nombre: 'Sebastian Huaman Yomona',
+        especialidades: ['Fade', 'Corte Clásico'],
+        foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop&crop=face',
+      },
+      {
+        barberia_id: barberia.id,
+        nombre: 'Jhoan Vargas Collas',
+        especialidades: ['Diseño', 'Degradado'],
+        foto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80&auto=format&fit=crop&crop=face',
+      },
+      {
+        barberia_id: barberia.id,
+        nombre: 'Romina Montes Villalobos',
+        especialidades: ['Barba', 'Tratamientos'],
+        foto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&auto=format&fit=crop&crop=face',
+      },
+      {
+        barberia_id: barberia.id,
+        nombre: 'Luis Urbina Martinez',
+        especialidades: ['Corte + Barba', 'Fade'],
+        foto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop&crop=face',
+      },
     ],
     skipDuplicates: true,
   })

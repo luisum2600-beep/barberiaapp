@@ -1,41 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand colors — extraídas del logo */
-  --clr-bg:        #0a0a0a;
-  --clr-surface:   #111111;
-  --clr-surface-2: #1a1a1a;
-  --clr-border:    #2a2a2a;
+  /* Base oscura — premium OLED */
+  --clr-bg:        #080808;
+  --clr-surface:   #111010;
+  --clr-surface-2: #1A1917;
+  --clr-border:    #242424;
 
-  --clr-yellow:    #F5C800;
-  --clr-yellow-dim:#B89600;
-  --clr-red:       #D42B2B;
-  --clr-green:     #2DB85A;
-  --clr-olive:     #7A7A00;
+  /* Acento único — amber gold */
+  --clr-amber:     #C9993A;
+  --clr-amber-dim: #8B6A20;
+  --clr-amber-glow:rgba(201,153,58,0.12);
 
+  /* Texto */
+  --clr-cream:     #F2EFE8;
+  --clr-gray-300:  #C8C4BC;
+  --clr-gray-500:  #8A8680;
+  --clr-gray-700:  #444040;
+
+  /* Funcionales */
+  --clr-red:       #9B2020;
   --clr-white:     #FFFFFF;
-  --clr-gray-200:  #E0E0E0;
-  --clr-gray-400:  #A0A0A0;
-  --clr-gray-600:  #555555;
 
-  /* Typography */
+  /* Tipografía */
   --font-display: var(--font-display, 'Bebas Neue', sans-serif);
   --font-body:    var(--font-body, 'Inter', sans-serif);
 
-  /* Neo-brutalist shadow — skill recommendation: 0px radius + bold 2-4px borders */
-  --shadow-neo:       4px 4px 0 var(--clr-yellow);
-  --shadow-neo-red:   4px 4px 0 var(--clr-red);
-  --shadow-neo-green: 4px 4px 0 var(--clr-green);
-  --shadow-neo-sm:    2px 2px 0 var(--clr-yellow);
-  --shadow-neo-lg:    6px 6px 0 var(--clr-yellow);
+  /* Sombras neo-brutalist */
+  --shadow-neo:    4px 4px 0 var(--clr-amber);
+  --shadow-neo-sm: 2px 2px 0 var(--clr-amber);
+  --shadow-neo-lg: 6px 6px 0 var(--clr-amber);
 
-  /* Transitions */
+  /* Transición */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
   --color-background: var(--clr-bg);
-  --color-foreground: var(--clr-white);
+  --color-foreground: var(--clr-cream);
   --font-sans: var(--font-body);
 }
 
@@ -49,72 +51,48 @@ html {
 
 body {
   background: var(--clr-bg);
-  color: var(--clr-white);
+  color: var(--clr-cream);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--clr-bg); }
-::-webkit-scrollbar-thumb { background: var(--clr-yellow); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--clr-amber); }
 
 /* Selection */
 ::selection {
-  background: var(--clr-yellow);
+  background: var(--clr-amber);
   color: var(--clr-bg);
 }
 
-/* Display font utility */
+/* Display font */
 .font-display {
   font-family: var(--font-display);
   letter-spacing: 0.02em;
 }
 
-/* Section label style */
+/* Section label */
 .section-label {
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--clr-gray-400);
+  color: var(--clr-gray-500);
 }
 
-/* Neo-brutalist card */
-.card-neo {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
-}
-
-.card-neo:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-neo);
-}
-
-/* Noise overlay for hero */
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.04;
-}
-
-/* Nav link hover — CSS driven, no JS */
+/* Nav link hover */
 .nav-link {
-  color: var(--clr-gray-400);
+  color: var(--clr-gray-500);
   transition: color 150ms var(--ease-out);
 }
-.nav-link:hover {
-  color: var(--clr-yellow);
-}
+.nav-link:hover { color: var(--clr-amber); }
 
-/* Primary CTA button — neo-brutalist: offset shadow lifts on hover */
+/* Botón primario neo-brutalist */
 .btn-neo-primary {
-  background: var(--clr-yellow);
+  background: var(--clr-amber);
   color: var(--clr-bg);
   box-shadow: var(--shadow-neo);
   transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
@@ -122,6 +100,27 @@ body {
 .btn-neo-primary:hover {
   transform: translate(-3px, -3px);
   box-shadow: var(--shadow-neo-lg);
+}
+
+/* Card neo — hover lift */
+.card-neo {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+}
+.card-neo:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-neo);
+}
+
+/* Noise overlay */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.05;
 }
 
 /* Reduced motion */
