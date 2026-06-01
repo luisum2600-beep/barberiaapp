@@ -22,10 +22,12 @@
   --font-display: var(--font-display, 'Bebas Neue', sans-serif);
   --font-body:    var(--font-body, 'Inter', sans-serif);
 
-  /* Neo-brutalist shadow */
-  --shadow-neo:     4px 4px 0 var(--clr-yellow);
-  --shadow-neo-red: 4px 4px 0 var(--clr-red);
-  --shadow-neo-sm:  2px 2px 0 var(--clr-yellow);
+  /* Neo-brutalist shadow — skill recommendation: 0px radius + bold 2-4px borders */
+  --shadow-neo:       4px 4px 0 var(--clr-yellow);
+  --shadow-neo-red:   4px 4px 0 var(--clr-red);
+  --shadow-neo-green: 4px 4px 0 var(--clr-green);
+  --shadow-neo-sm:    2px 2px 0 var(--clr-yellow);
+  --shadow-neo-lg:    6px 6px 0 var(--clr-yellow);
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -99,6 +101,27 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   opacity: 0.04;
+}
+
+/* Nav link hover — CSS driven, no JS */
+.nav-link {
+  color: var(--clr-gray-400);
+  transition: color 150ms var(--ease-out);
+}
+.nav-link:hover {
+  color: var(--clr-yellow);
+}
+
+/* Primary CTA button — neo-brutalist: offset shadow lifts on hover */
+.btn-neo-primary {
+  background: var(--clr-yellow);
+  color: var(--clr-bg);
+  box-shadow: var(--shadow-neo);
+  transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+}
+.btn-neo-primary:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-neo-lg);
 }
 
 /* Reduced motion */

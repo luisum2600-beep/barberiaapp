@@ -68,7 +68,7 @@ export default function Servicios({ servicios, slug }: ServiciosProps) {
             return (
               <article
                 key={s.id}
-                className="group flex flex-col justify-between p-7 transition-all duration-200"
+                className="group relative flex flex-col justify-between p-7 transition-all duration-200"
                 style={{
                   background: 'var(--clr-surface)',
                   minHeight: '260px',

@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import LogoFlowPE from './LogoFlowPE'
@@ -52,20 +54,18 @@ export default function Hero({ barberia }: HeroProps) {
       >
         <span className="section-label">Lima · Perú</span>
         <nav className="hidden md:flex items-center gap-8">
-          {['Servicios', 'Equipo', 'Reseñas', 'Contacto'].map((item) => (
+          {[
+            { label: 'Servicios', anchor: '#servicios' },
+            { label: 'Equipo',    anchor: '#equipo' },
+            { label: 'Reseñas',  anchor: '#reseñas' },
+            { label: 'Contacto', anchor: '#contacto' },
+          ].map(({ label, anchor }) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase().replace('ñ', 'n')}`}
-              className="section-label transition-colors"
-              style={{ color: 'var(--clr-gray-400)' }}
-              onMouseEnter={(e) =>
-                ((e.target as HTMLElement).style.color = 'var(--clr-yellow)')
-              }
-              onMouseLeave={(e) =>
-                ((e.target as HTMLElement).style.color = 'var(--clr-gray-400)')
-              }
+              key={label}
+              href={anchor}
+              className="section-label nav-link"
             >
-              {item}
+              {label}
             </a>
           ))}
         </nav>
@@ -125,22 +125,7 @@ export default function Hero({ barberia }: HeroProps) {
               <div className="flex flex-col gap-3">
                 <Link
                   href={`/${barberia.slug}/agendar`}
-                  className="inline-flex items-center gap-3 px-6 py-4 font-semibold text-sm transition-all w-fit"
-                  style={{
-                    background: 'var(--clr-yellow)',
-                    color: 'var(--clr-bg)',
-                    boxShadow: 'var(--shadow-neo)',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.transform = 'translate(-3px, -3px)'
-                    el.style.boxShadow = '7px 7px 0 var(--clr-yellow)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.transform = ''
-                    el.style.boxShadow = 'var(--shadow-neo)'
-                  }}
+                  className="inline-flex items-center gap-3 px-6 py-4 font-semibold text-sm w-fit btn-neo-primary"
                 >
                   Reserva tu cita
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
