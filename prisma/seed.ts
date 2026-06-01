@@ -11,8 +11,8 @@ async function main() {
     update: {},
     create: {
       slug: 'demo',
-      nombre: 'Barbería Don Carlos',
-      descripcion: 'La mejor barbería de Lima. Estilo, precisión y tradición.',
+      nombre: 'Flow PE',
+      descripcion: 'La barbería con más flow de Lima. Estilo, precisión y cultura de calle.',
       direccion: 'Av. Larco 345, Miraflores, Lima',
       telefono: '+51 987 654 321',
       whatsapp: '+51987654321',

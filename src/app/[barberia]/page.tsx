@@ -44,13 +44,13 @@ export default async function LandingPage({ params }: Props) {
   if (!barberia) notFound()
 
   return (
-    <main className="bg-neutral-950 text-white min-h-screen">
+    <main className="min-h-screen" style={{ background: 'var(--clr-bg)' }}>
       <Hero barberia={barberia} />
       <Servicios servicios={barberia.servicios} slug={slug} />
       <Barberos barberos={barberia.barberos} slug={slug} />
       <Galeria fotos={barberia.fotos} />
       <Resenas resenas={barberia.resenas} />
-      <Ubicacion barberia={barberia} />
+      <Ubicacion barberia={{ ...barberia, slug }} />
     </main>
   )
 }

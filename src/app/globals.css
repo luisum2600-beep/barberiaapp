@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colors — extraídas del logo */
+  --clr-bg:        #0a0a0a;
+  --clr-surface:   #111111;
+  --clr-surface-2: #1a1a1a;
+  --clr-border:    #2a2a2a;
+
+  --clr-yellow:    #F5C800;
+  --clr-yellow-dim:#B89600;
+  --clr-red:       #D42B2B;
+  --clr-green:     #2DB85A;
+  --clr-olive:     #7A7A00;
+
+  --clr-white:     #FFFFFF;
+  --clr-gray-200:  #E0E0E0;
+  --clr-gray-400:  #A0A0A0;
+  --clr-gray-600:  #555555;
+
+  /* Typography */
+  --font-display: var(--font-display, 'Bebas Neue', sans-serif);
+  --font-body:    var(--font-body, 'Inter', sans-serif);
+
+  /* Neo-brutalist shadow */
+  --shadow-neo:     4px 4px 0 var(--clr-yellow);
+  --shadow-neo-red: 4px 4px 0 var(--clr-red);
+  --shadow-neo-sm:  2px 2px 0 var(--clr-yellow);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--clr-bg);
+  --color-foreground: var(--clr-white);
+  --font-sans: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--clr-bg);
+  color: var(--clr-white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-bg); }
+::-webkit-scrollbar-thumb { background: var(--clr-yellow); border-radius: 3px; }
+
+/* Selection */
+::selection {
+  background: var(--clr-yellow);
+  color: var(--clr-bg);
+}
+
+/* Display font utility */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+/* Section label style */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-gray-400);
+}
+
+/* Neo-brutalist card */
+.card-neo {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+}
+
+.card-neo:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-neo);
+}
+
+/* Noise overlay for hero */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }
